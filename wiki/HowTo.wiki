@@ -1,0 +1,19 @@
+#summary This is your starting point if you want to learn how to control your AR.Drone with your RC Controller wifi-less!
+#labels HowTo
+
+= Introduction =
+
+Let me start with a warning:
+
+*This mod is not for the faint of heart, you will have to modify critical system configs and if you mess this up, you might brick your drone!*
+
+If you have some experience with RC, soldering and basic knowledge of using terminal read on! If not, stick with flying your drone with your favourite iDevice :)
+
+= Details =
+
+Continue reading with the following chapters
+  * Required Hardware
+  * Hardware modifications
+  * Software modifications
+  * Setup
+  * Fly :)
