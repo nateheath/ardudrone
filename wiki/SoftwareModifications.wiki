@@ -63,6 +63,31 @@ Result should be:
 
 If you get a "Segmentation fault" the binary was probably uploaded as ASCII, retry in binary format!
 
+2.2) Check if the startup script runs:
+
+{{{
+# ./ardudrone_setup.sh
+}}}
+
+
+You should see the following output, the last lines throw some error messages, this is ok since we did not yet connect the Arduino. For us right now is only important that the script itself runs and the modules get loaded without problems.
+
+{{{
+Enabling USB, powering up Arduino and launching AT Commands Proxy
+Loading usbserial.ko
+Loading ftdi_sio.ko
+Enabling USB Port
+Loading dwc_otg.ko
+Waiting 3s for the device to be ready
+Setting correct baud rate of 115200 for /dev/ttyUSB0
+[SOME ERROR MESSAGE ABOUT DEVICE NOT FOUND, IS OK AT THIS TIME]
+Launching AT Command Proxy server
+[SOME ERROR MESSAGE ABOUT DEVICE NOT FOUND, IS OK AT THIS TIME]
+}}}
+
+
+If you see any other errors, make sure you uploaded the files correctly and and your drone runs on firmware 1.3.3!
+
 
 3) *OPTIONAL but RECOMMENDED* Make backups of system files we want to change
 
