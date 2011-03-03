@@ -1,3 +1,170 @@
 #summary All required soft changes for this mod
 
 = 3. Software modifications =
+
+== Arduino ==
+
+Download the Arduino IDE and upload the provided sketch to your board. Keep it connected as we will setup it later using your computer!
+
+
+== Drone ==
+
+
+1) Connect to your drone with your computer over WiFi. Use any FTP client to connect to it:
+
+{{{
+192.168.1.1
+}}}
+
+Upload the provided *ardudrone/* folder to the drone (watch out to use binary format transfer!)
+
+2) Connect to your drone with telnet or another terminal client:
+
+{{{
+telnet 192.168.1.1
+}}}
+
+Make *ardudrone_setup.sh* and *atcomproxy_arm* executable. To check this, use *ls -lisa*, there should be three _x_ in the third colum like below:
+
+{{{
+# cd /data/video/ardudrone
+# chmod 755 ardudrone_setup.sh 
+# chmod 755 atcomproxy_arm 
+# ls -lisa
+    111    0 drwxr-xr-x    2 root     root          600 Jan  1 00:52 .
+     65    0 drwxr-xr-x    4 root     root          504 Jan  1 00:52 ..
+    124    4 -rwxr-xr-x    1 root     root          821 Jan  1 00:49 ardudrone_setup.sh
+    127   16 -rwxr-xr-x    1 root     root        12494 Jan  1 00:49 atcomproxy_arm
+    125  876 -rw-r--r--    1 root     root       896291 Jan  1 00:49 dwc_otg.ko
+    128  248 -rw-r--r--    1 root     root       250284 Jan  1 00:49 ftdi_sio.ko
+    126    8 -rw-r--r--    1 root     root         6421 Jan  1 00:49 libioctl_arm.so
+    129  340 -rw-r--r--    1 root     root       347714 Jan  1 00:49 usbserial.ko
+}}}
+    
+2.1 ) Check if the proxy app runs:
+
+{{{
+# ./atcomproxy_arm -v -d /dev/tty
+./atcomproxy_arm > Proxy Ready: Waiting for data in /dev/tty to send to 192.168.1.1:5556!
+}}}
+Type in the following line (or copy&paste)
+{{{
+AT*LED=1,2,1073741824,3
+}}}
+Result should be:
+{{{
+./atcomproxy_arm > AT*LED=1,2,1073741824,3!
+
+[LEDS ON THE DRONE SHOULD BLINK FOR 3S!]
+
+[EXIT WITH CTRL+C]
+}}}
+
+
+If you get a "Segmentation fault" the binary was probably uploaded as ASCII, retry in binary format!
+
+
+3) (OPTIONAL but RECOMMENDED) Create folder backup/ in /data/video
+
+{{{
+# mkdir /data/video/backup
+}}}
+
+4) Copy system scripts to make backups
+
+{{{
+# cp /bin/check_update.sh /data/video/backup/
+# cp /etc/init.d/rcS /data/video/backup/
+}}}
+
+5) Edit system scripts to enable USB port at startup and launch proxy application
+
+*WARNING: This is the most critical part of the mod. If you mess anything up in these scripts your drone might not boot anymore and is bricked. Your only rescure is to reflash it with an USB-Cable or the Parrot support (but I do not know if they help you if you trashed the system files ;).*
+
+5.1) *rcS*: We have to add the following line
+
+{{{
+/data/video/ardudrone/ardudrone_setup.sh
+}}}
+
+in the file */etc/init.d/rcS* as seen below:
+
+{{{
+# vi /etc/init.d/rcS
+
+[MOVE WITH CURSOR TO LINE 54]
+[i]
+[INSERT LINE BY TYPING or COPY&PASTE]
+[RETURN]
+[ESC]
+[:]
+[wq]
+[ENTER] 
+}}}
+
+It should look like this:
+
+{{{
+...
+/bin/wifi_setup.sh                                                  
+                                                                   
+# Patch to enable button management.                                
+ln -s /dev /dev/input                                               
+                                                              
+/data/video/ardudrone/ardudrone_setup.sh
+                                                              
+#mount -o nolock,proto=tcp -t nfs 192.168.0.11:/mnt/video /home/default
+/bin/check_update.sh                                                   
+...
+}}}                                                             
+
+
+5.2) *check_update.sh*: Now we need to add the following line
+
+{{{
+export LD_PRELOAD=/data/video/ardudrone/libioctl_arm.so
+}}}
+
+at the top of the script */bin/check_update.sh* as seen below:
+
+{{{
+# vi /bin/check_update.sh
+[MOVE WITH CURSOR TO LINE 2]
+[i]
+[RETURN]
+[INSERT LINE BY TYPING or COPY&PASTE]
+[RETURN]
+[ESC]
+[:]
+[wq]
+[ENTER]
+}}}
+
+It should look like this:
+
+{{{
+#!/bin/sh
+
+export LD_PRELOAD=/data/video/ardudrone/libioctl_arm.so
+
+UPDATE_PATH=/update/ardro…
+
+}}}
+
+7) Make sure the changes are written to flash by typing
+
+{{{
+# sync
+}}}
+
+8) Check your modified scripts by typing
+
+{{{
+# cat /etc/init.d/rcS 
+[YOUR MODIFIED SCRIPT SHOULD OUTPUT]
+
+# cat /bin/check_update.sh
+[YOUR MODIFIED SCRIPT SHOULD OUTPUT]
+}}}
+
+9) Reboot your drone but do not plug in the Arduino yet! It should start like normal, if not, its time to get your USB-Flash-Cable ready ;) ! If it boots, continue with setup.
