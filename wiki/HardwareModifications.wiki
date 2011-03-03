@@ -1,0 +1,27 @@
+#summary This page sums up any hardware modifications and soldering that has to be done
+
+= 2. Hardware modifications =
+
+== Drone ==
+
+Remove the rubber protector from the USB service port on the bottom.
+
+Done.
+
+:)
+
+== Cable ==
+
+The first thing we need is the cable to connect the Arduino over the FTDI Breakout to the drone. For this we take the Mini-USB Type B plug with a bit of cable left to it (depending on where you want to place the Arduino and Receiver on the drone). Cut the cable in two and connect/soldier the molex plug to the open end of the Mini B part. Note: Keep the other end, if you bought another molex connector you can put together a USB-Flash-Cable for emergency with it!
+
+== Arduino ==
+
+=== Header ===
+
+Soldier a 6-pin header to the short end of the Arduino. This will be used to connect it to the FTDI Breakout Board to either flash it or talk to the drone.
+
+=== Input ===
+
+For the signals, the Arduino has 13 pins (numbered 1 - 13) of wich we need 6, one for each channel of your RC Receiver. Soldier the signal outputs of your receiver to any of the numbered pins on the arduino.
+
+The Arduino supplies +5V on the *VCC* pin and (-) on any of the free *GND* pins. How your receiver accepts power highly dependend on the actual model, please check your manual for exact instructions for that!
