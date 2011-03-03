@@ -64,7 +64,8 @@ Result should be:
 If you get a "Segmentation fault" the binary was probably uploaded as ASCII, retry in binary format!
 
 
-3) *OPTIONAL but RECOMMENDED* Make backups
+3) *OPTIONAL but RECOMMENDED* Make backups of system files we want to change
+
 3.1) Create folder backup/ in /data/video
 
 {{{
