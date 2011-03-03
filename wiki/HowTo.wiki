@@ -1,4 +1,4 @@
-#summary This is your starting point if you want to learn how to control your AR.Drone with your RC Controller wifi-less!
+#summary This is your starting point if you want to learn how to control your AR.Drone with your RC Radio WiFi-less!
 #labels HowTo,Featured
 
 = Introduction =
@@ -9,22 +9,25 @@ Let me start with a warning:
 
 If you have some experience with RC, soldering and basic knowledge of using terminal read on! If not, stick with flying your drone with your favourite iDevice :)
 
-= Thanks =
+== Thanks ==
 
 Thank you to a lot of nice people without them this would not have been possible!
   * [http://www.rcgroups.com/forums/member.php?u=10627 Mheeli] for creating the original Wifi-version of this mod and inspiring me to do this
   * [http://www.rcgroups.com/forums/member.php?u=335286 MAPGPS] for all his work on the AR.Drone especially enabling the USB port and his great help and advise all the time!
   * [http://embedded-software.blogspot.com/ scorpion2k] for literally saving my drone twice from being a brick ;) His research on creating a custom kernel as well enabling USB and his great [http://code.google.com/p/ardrone-tool/ tools] were essential!
 
-= Notes =
 
-This mod currently *only works* with AR.Drone firmware *version 1.3.3*. If you want to use it, you have to downgrade your drone to this version. We must wait until Parrot releases the sources for the new firmwares to compile the tools for the latest version!
+== How it works ==
 
-= Details =
+To control your AR.Drone with a regular RC Radio, we have to translate the signals used by the RC gear into commands understandable by the drone. The translated commands (_AT Commands_) are then sent to the controlling program running on the drone. This is actually a server that accepts any commands it receives over network (usually from your iDevice over WiFi).
 
-Continue reading with the following chapters
-  * Required Hardware
-  * Hardware modifications
-  * Software modifications
-  * Setup
-  * Fly :)
+This happens in two steps:
+  # An Arduino board reads the RC signals and translates them. They are then send over a serial connection to the drone.
+  # On the drone itself waits an additional small proxy application redirecting any commands it receives to the commands server (called _program.elf_).
+
+To connect the Arduino to the drone and also to power it (and your RC Receiver!) we use the USB service port on the bottom of the drone. This actually contains two interfaces: an -by default disabled- USB port and a serial port. Both can be used for this mod but both have its pros and cons. To make things easy for now, I will only describe the mod using the USB connection! I might add the serial version later…
+
+
+== Notes ==
+
+This mod currently *only works* with AR.Drone firmware *version 1.3.3*. If you want to do the mod and do not have this version installed, you have to down-/upgrade to this version. Unfortunately, we must wait until Parrot releases the sources for the new firmwares to compile all required tools for the latest version!
