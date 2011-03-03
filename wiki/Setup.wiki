@@ -1,0 +1,3 @@
+#summary Steps to setup your Arduino and the RC controller
+
+= 4. Setup =
