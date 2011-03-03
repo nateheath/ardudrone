@@ -1,0 +1,3 @@
+#summary All required soft changes for this mod
+
+= 3. Software modifications =
