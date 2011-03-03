@@ -1,3 +1,8 @@
 #summary Sidebar for all Pages
 
   * [HowTo How To]
+      # [RequiredHardware Required Hardware]
+      # [HardwareModifications Hardware modifications]
+      # [SoftwareModifications Software modifications]
+      # [Setup Setup]
+      # [FinalWords Fly :)]
