@@ -64,24 +64,25 @@ Result should be:
 If you get a "Segmentation fault" the binary was probably uploaded as ASCII, retry in binary format!
 
 
-3) (OPTIONAL but RECOMMENDED) Create folder backup/ in /data/video
+3) *OPTIONAL but RECOMMENDED* Make backups
+3.1) Create folder backup/ in /data/video
 
 {{{
 # mkdir /data/video/backup
 }}}
 
-4) Copy system scripts to make backups
+3.2) Copy system scripts to make backups
 
 {{{
 # cp /bin/check_update.sh /data/video/backup/
 # cp /etc/init.d/rcS /data/video/backup/
 }}}
 
-5) Edit system scripts to enable USB port at startup and launch proxy application
+4) Edit system scripts to enable USB port at startup and launch proxy application
 
 *WARNING: This is the most critical part of the mod. If you mess anything up in these scripts your drone might not boot anymore and is bricked. Your only rescure is to reflash it with an USB-Cable or the Parrot support (but I do not know if they help you if you trashed the system files ;).*
 
-5.1) *rcS*: We have to add the following line
+4.1) *rcS*: We have to add the following line
 
 {{{
 /data/video/ardudrone/ardudrone_setup.sh
@@ -119,7 +120,7 @@ ln -s /dev /dev/input
 }}}                                                             
 
 
-5.2) *check_update.sh*: Now we need to add the following line
+4.2) *check_update.sh*: Now we need to add the following line
 
 {{{
 export LD_PRELOAD=/data/video/ardudrone/libioctl_arm.so
@@ -151,13 +152,13 @@ UPDATE_PATH=/update/ardro…
 
 }}}
 
-7) Make sure the changes are written to flash by typing
+5) Make sure the changes are written to flash by typing
 
 {{{
 # sync
 }}}
 
-8) Check your modified scripts by typing
+6) Check your modified scripts by typing
 
 {{{
 # cat /etc/init.d/rcS 
@@ -167,4 +168,4 @@ UPDATE_PATH=/update/ardro…
 [YOUR MODIFIED SCRIPT SHOULD OUTPUT]
 }}}
 
-9) Reboot your drone but do not plug in the Arduino yet! It should start like normal, if not, its time to get your USB-Flash-Cable ready ;) ! If it boots, continue with setup.
+7) Reboot your drone but do not plug in the Arduino yet! It should start like normal, if not, its time to get your USB-Flash-Cable ready ;) ! If it boots, continue with setup.
