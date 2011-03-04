@@ -9,5 +9,6 @@
   * USB Cable: Type A (male) <> Mini-USB Type B (male)
   * Break away headers with right angle (or similar connectors to soldier onto the Arduino board to connect it to the FTDI Basic) ([http://www.sparkfun.com/products/553 buy])
   * [http://octopart.com/511100850-molex-3763204 Molex 511100850] or similar 2x4 2.00mm (.079") pitch connector (I know this one is hard to get, be creative and better get two or three of em at once! ;)
+  https://ardudrone.googlecode.com/svn/wiki/images/Molex-511100850.gif
   * Cables/connectors to connect your RC Receiver to the Arduino board (this really depends on your setup)
   * Optional but recommended: shrinking tube for the cable and to protect the Arduino
