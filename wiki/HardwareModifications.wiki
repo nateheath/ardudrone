@@ -14,7 +14,19 @@ Done.
 
 == 2.2 Making a Cable ==
 
-The first thing we need is the cable to connect the Arduino over the FTDI breakout board to the drone. For this we take the Mini-USB Type B plug with a bit of cable left to it (depending on where you want to place the Arduino and Receiver on the drone). Cut the cable in two and connect/solder the molex plug to the open end of the Mini B part. Note: Keep the other end, if you bought another molex connector you can put together a USB-Flash-Cable for emergency with it!
+The first thing we make is the cable to connect the Arduino over the FTDI breakout board to the drone. For this we need the USB cable and the molex plug (or whatelse you bought). Take the side with the Mini-USB Type B plug and cut it of with about 10cm of cable left to it (depending on where you want to place the Arduino and receiver on the drone). *Note: Keep the other end! With a second molex connector you can put together an emergency  USB Flash Cable! You know, just in case ;) *
+
+Now lay open the single wires, you should see four of em: black/red/white/green. Black is ground, red is +V, green is Data+ and white is Data-. Connect/solder these to the molex plug in the order as shown below:
+
+https://ardudrone.googlecode.com/svn/wiki/images/CableUSB.png
+
+In case you wonder about picture (2), I couldn't get the molex plug and used *2x20 2.00mm (.079") pitch break away double row female headers* (with swiss round machined pins) to make the plug. That's what you see there! :)
+
+=== (USB Flash Cable) ===
+
+If you have a second molex plug and a bit of spare time left, you can make an USB Flash Cable. Below you can see  the official guide from Parrot that shows the pin-layout of this cable. As you can see it's actually the same we used for our first cable. So repeat your work from above with the other end of the cable et voilà: Flash Cable :)
+
+https://ardudrone.googlecode.com/svn/wiki/images/ARDrone-USB-Cable.png
 
 
 
