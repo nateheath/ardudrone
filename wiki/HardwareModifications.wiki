@@ -14,21 +14,21 @@ Done.
 
 == 2.2 Making a Cable ==
 
-The first thing we need is the cable to connect the Arduino over the FTDI breakout board to the drone. For this we take the Mini-USB Type B plug with a bit of cable left to it (depending on where you want to place the Arduino and Receiver on the drone). Cut the cable in two and connect/soldier the molex plug to the open end of the Mini B part. Note: Keep the other end, if you bought another molex connector you can put together a USB-Flash-Cable for emergency with it!
+The first thing we need is the cable to connect the Arduino over the FTDI breakout board to the drone. For this we take the Mini-USB Type B plug with a bit of cable left to it (depending on where you want to place the Arduino and Receiver on the drone). Cut the cable in two and connect/solder the molex plug to the open end of the Mini B part. Note: Keep the other end, if you bought another molex connector you can put together a USB-Flash-Cable for emergency with it!
 
 
 
 == 2.3 Getting the Arduino ready ==
 
-=== 2.3.1 Soldier a Header ===
+=== 2.3.1 Solder a Header ===
 
-Soldier a 6-pin header to the short end of the Arduino. This will be used to connect it to the FTDI Breakout Board to either flash it or talk to the drone.
+Solder a 6-pin header to the short end of the Arduino. This will be used to connect it to the FTDI Breakout Board to either flash it or talk to the drone.
 
 https://ardudrone.googlecode.com/svn/wiki/images/arduino_header.jpg
 
 === 2.3.2 Connect the Receiver to the Arduino ===
 
-The following connections must be made between your receiver and the Arduino:
+The following connections must be made between your receiver and the Arduino: (LED just highlighted for illustration!)
 
 https://ardudrone.googlecode.com/svn/wiki/images/ArduinoWiring.jpg
 
@@ -40,7 +40,7 @@ To get the signals from CH1 - CH6, we only need to connect the *servo signal cab
 
 https://ardudrone.googlecode.com/svn/wiki/images/ServoSignalWiring.jpg
 
-These signal wires must be connected to the I/O pins of the Arduino. It has 13 pins (numbered 1 - 13) of wich we need 6, one for each channel of your RC receiver. Soldier the signal outputs of your receiver to any of the numbered pins on the Arduino as shown above.
+These signal wires must be connected to the I/O pins of the Arduino. It has 13 pins (numbered 1 - 13) of wich we need 6, one for each channel of your RC receiver. Solder the signal outputs of your receiver to any of the numbered pins on the Arduino as in the wiring illustration shown above.
 
 Note: Try to *avoid using Pin 13*, if you *want to use the built-in LED* of the Arduino. This pin is shared with the LED!
 
