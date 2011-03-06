@@ -31,3 +31,5 @@ To connect the Arduino to the drone and also to power it (and your RC Receiver!)
 == Notes ==
 
 This mod currently *only works* with AR.Drone firmware *version 1.3.3*. If you want to do the mod and do not have this version installed, you have to down-/upgrade to this version. Unfortunately, we must wait until Parrot releases the sources for the new firmwares to compile all required tools for the latest version!
+
+Most images used are for illustration purposes only. Used images and trademarks are copyright of their respective owners.
