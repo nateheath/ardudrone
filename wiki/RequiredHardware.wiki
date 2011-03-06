@@ -14,7 +14,7 @@
   https://ardudrone.googlecode.com/svn/wiki/images/FTDIBasicBreakout.jpg
   * USB Cable: Type A (male) <> Mini-USB Type B (male)
   https://ardudrone.googlecode.com/svn/wiki/images/USB_Cable_A-MiniB.jpg
-  * Break away headers with right angle (or similar connectors to soldier onto the Arduino board to connect it to the FTDI Basic) ([http://www.sparkfun.com/products/553 buy])
+  * Break away headers with right angle (or similar connectors to solder to the Arduino board to connect it to the FTDI Basic) ([http://www.sparkfun.com/products/553 buy])
   https://ardudrone.googlecode.com/svn/wiki/images/BreakAwayHeadersRightAngle.jpg
   * [http://octopart.com/511100850-molex-3763204 Molex 511100850] or similar 2x4 2.00mm (.079") pitch connector (I know this one is hard to get, be creative and better get two or three of em at once! ;)
   https://ardudrone.googlecode.com/svn/wiki/images/Molex-511100850.gif
