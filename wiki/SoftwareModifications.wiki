@@ -2,6 +2,8 @@
 
 = 3. Software modifications =
 
+If you haven't done it already, download the [http://code.google.com/p/ardudrone/downloads/list latest package] with all required files for this mod and unzip it somewhere on your computer.
+
 == 3.1 Drone ==
 
 
