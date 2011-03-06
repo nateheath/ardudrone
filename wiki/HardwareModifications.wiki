@@ -2,7 +2,9 @@
 
 = 2. Hardware modifications =
 
-== Drone ==
+<wiki:toc max_depth="3" />
+
+== 2.1 On the Drone ==
 
 Remove the rubber protector from the USB service port on the bottom.
 
@@ -10,18 +12,42 @@ Done.
 
 :)
 
-== Cable ==
+== 2.2 Making a Cable ==
 
-The first thing we need is the cable to connect the Arduino over the FTDI Breakout to the drone. For this we take the Mini-USB Type B plug with a bit of cable left to it (depending on where you want to place the Arduino and Receiver on the drone). Cut the cable in two and connect/soldier the molex plug to the open end of the Mini B part. Note: Keep the other end, if you bought another molex connector you can put together a USB-Flash-Cable for emergency with it!
+The first thing we need is the cable to connect the Arduino over the FTDI breakout board to the drone. For this we take the Mini-USB Type B plug with a bit of cable left to it (depending on where you want to place the Arduino and Receiver on the drone). Cut the cable in two and connect/soldier the molex plug to the open end of the Mini B part. Note: Keep the other end, if you bought another molex connector you can put together a USB-Flash-Cable for emergency with it!
 
-== Arduino ==
 
-=== Header ===
+
+== 2.3 Getting the Arduino ready ==
+
+=== 2.3.1 Soldier a Header ===
 
 Soldier a 6-pin header to the short end of the Arduino. This will be used to connect it to the FTDI Breakout Board to either flash it or talk to the drone.
 
-=== Input ===
+https://ardudrone.googlecode.com/svn/wiki/images/arduino_header.jpg
 
-For the signals, the Arduino has 13 pins (numbered 1 - 13) of wich we need 6, one for each channel of your RC Receiver. Soldier the signal outputs of your receiver to any of the numbered pins on the arduino.
+=== 2.3.2 Connect the Receiver to the Arduino ===
 
-The Arduino supplies +5V on the *VCC* pin and (-) on any of the free *GND* pins. How your receiver accepts power highly dependend on the actual model, please check your manual for exact instructions for that!
+The following connections must be made between your receiver and the Arduino:
+
+https://ardudrone.googlecode.com/svn/wiki/images/ArduinoWiring.jpg
+
+The Arduino supplies *+5V* on the *VCC* pin and *(-)* on the free *GND* pins. Connect these two to the BEC input of your receiver. How exactly your receiver accepts power highly dependends on the actual model, please check your manual for details!
+
+To get the signals from CH1 - CH6, we only need to connect the *servo signal cable* of each channel to the Arduino. Which cable carries the signal depends on the manufacturer of your receiver, usually this is the white or orange wire! Please again check the manual for details!
+
+*Examples for signal lines:*
+
+https://ardudrone.googlecode.com/svn/wiki/images/ServoSignalWiring.jpg
+
+These signal wires must be connected to the I/O pins of the Arduino. It has 13 pins (numbered 1 - 13) of wich we need 6, one for each channel of your RC receiver. Soldier the signal outputs of your receiver to any of the numbered pins on the Arduino as shown above.
+
+Note: Try to *avoid using Pin 13*, if you *want to use the built-in LED* of the Arduino. This pin is shared with the LED!
+
+=== 2.3.3 Result ===
+
+That's it with the soldering, you should now have something like this:
+
+*(USB Cable - FTDI Basic Breakout - Arduino - RC Receiver)*
+
+https://ardudrone.googlecode.com/svn/wiki/images/cable_ftdi_arduino_receiver_disconnected.jpg
