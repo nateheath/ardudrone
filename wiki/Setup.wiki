@@ -6,7 +6,7 @@
 
 I can't help you much with the setup of your radio besides some general notes. As said before, you need a 6CH transmitter with two sticks and two switches or better a switch and a button.
 
-I have used a standard helicopter model template without mixers and setup the switch/butto to suit the needs for the drone as it can be seen in the following picture (I'm using a Multiplex ROYALpro)
+I have used a standard helicopter model template without mixers and setup the switch/button to suit the needs for the drone as it can be seen in the following picture (I'm using a Multiplex ROYALpro)
 
 https://ardudrone.googlecode.com/svn/wiki/images/Switch-Button_Example.jpg
 
@@ -14,7 +14,7 @@ https://ardudrone.googlecode.com/svn/wiki/images/Switch-Button_Example.jpg
 
 4.2.1 Go to the Arduino IDE on your computer and open the ArduDroneRC sketch. Also if not already running, enable your RC radio.
 
-4.2.2 Ignore the opened *ArduDroneRC_Sketch* file and navigate to the *user_config.h* file.
+4.2.2 Ignore the opened ArduDroneRC_Sketch file and navigate to the *user_config.h* file.
 
 4.2.3 First of all, uncomment the following line out. This will enable debug output we need for setup. Remember to comment it out later!
 
