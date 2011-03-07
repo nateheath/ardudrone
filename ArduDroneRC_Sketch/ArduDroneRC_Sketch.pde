@@ -1,5 +1,5 @@
 /*
- *  Ardu.Drone RC V0.2.1
+ *  Ardu.Drone RC V0.2.2
  *
  *  Created by nosaari on 16.02.11.
  *  (Based on RC Ar.Drone V2.1 by Mheeli at rcgroups.com)
@@ -31,6 +31,7 @@ enum ARDStatus
 int drone_status        = 0;
 int init_counter        = 0;
 int old_time            = 0;
+int setting_indoor      = 0;
 
 int throttle            = 0;
 int throttle_old        = 0;
@@ -72,6 +73,8 @@ char data[100];
 int stick_diff          = 0;
 int radio_read_seq      = 0;
 
+#define TRUE_STRING     "TRUE"     
+#define FALSE_STRING    "FALSE"     
 
 void setup()
 {
@@ -122,8 +125,13 @@ void setup()
         if (aux_1 > 1500)
             stick_diff = 1;
             
-        // TODO: Implement possibility to switch between indoor and outdoor config depending on state of aux_2!
-        
+        // If reset switch is high, use indoor setting otherwise outdoor
+        // Simultaneously sets hull on or off to the same value!
+        if (aux_2 > 1500 && setting_indoor == 0)
+            setting_indoor = 1;
+        else if (aux_2 < 1500 && setting_indoor == 1)
+            setting_indoor = 0;       
+
         if (throttle > 1500)
         {
             if ((throttle - 1500) > 50)
@@ -188,8 +196,29 @@ void setup()
         digitalWrite(LEDPIN, HIGH);
         delay(20);
         digitalWrite(LEDPIN, LOW);
+        delay(40);
+        
+        // Additional blink code depending on in-/outdoor setting
+        if (setting_indoor == 1)
+        {
+            // One >looong< for indoor
+            digitalWrite(LEDPIN, HIGH);
+            delay(200);
+            digitalWrite(LEDPIN, LOW);
+        }
+        else
+        {
+            // Two >medium_pause_medium< for outdoor
+            digitalWrite(LEDPIN, HIGH);
+            delay(60);
+            digitalWrite(LEDPIN, LOW);
+            delay(80);
+            digitalWrite(LEDPIN, HIGH);
+            delay(60);
+            digitalWrite(LEDPIN, LOW);
+        }
 #endif
-        delay(500);
+        delay(400);
     }
     
     // Steps for each channel
@@ -576,42 +605,82 @@ void initialise_drone()
         case 3: // Set drone ready to fly
             sprintf(data, "AT*CONFIG=%d\"general:navdata_demo\",\"TRUE\"\r", seq++);
             break;
-/*            
-        case X: // TODO: DO WE NEED PAIRING??!?
-            sprintf(data, "AT*CONFIG=%d,\"network:owner_mac\",\"%s\"\r", seq++, FAKE_MAC);
+
+        case 4: // Set a MAC so drone won't accept other connections and gets highjacked! :)
+            sprintf(data, "AT*CONFIG=%d,\"network:owner_mac\",\"%s\"\r", seq++, PAIR_MAC);
             break;
-*/            
-        case 4: // Set outdoor/indoor, outdoor = no shell, indoor = with shell
-            sprintf(data, "AT*CONFIG=%d,\"control:outdoor\",\"%s\"\rAT*CONFIG=%d,\"control:flight_without_shell\",\"%s\"\r",
-                seq++,
-                FLY_OUTDOOR,
-                seq++,
-                FLY_OUTDOOR);
+
+        case 5: // Set outdoor/indoor, outdoor = no shell, indoor = with shell
+            if (setting_indoor == 1)
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:outdoor\",\"%s\"\rAT*CONFIG=%d,\"control:flight_without_shell\",\"%s\"\r",
+                  seq++,
+                  FALSE_STRING,
+                  seq++,
+                  FALSE_STRING);
+            }
+            else
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:outdoor\",\"%s\"\rAT*CONFIG=%d,\"control:flight_without_shell\",\"%s\"\r",
+                  seq++,
+                  TRUE_STRING,
+                  seq++,
+                  TRUE_STRING);
+            }
+
             break;
             
-        case 5: // Set yaw rate
-            sprintf(data, "AT*CONFIG=%d,\"control:control_yaw\",\"%d\"\r", seq++, YAW_RATE);
+        case 6: // Set yaw rate
+            if (setting_indoor == 1)
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:control_yaw\",\"%d\"\r", seq++, IN_YAW_RATE);
+            }
+            else
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:control_yaw\",\"%d\"\r", seq++, OUT_YAW_RATE);
+            }
             break;
             
-        case 6: // Set throttle rate
-            sprintf(data, "AT*CONFIG=%d,\"control:control_vz_max\",\"%d\"\r", seq++, THROTTLE_RATE);
+        case 7: // Set throttle rate
+            if (setting_indoor == 1)
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:control_vz_max\",\"%d\"\r", seq++, IN_THROTTLE_RATE);
+            }
+            else
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:control_vz_max\",\"%d\"\r", seq++, OUT_THROTTLE_RATE);
+            }
             break;
             
-        case 7: // Set pitch, roll rate
-            sprintf(data, "AT*CONFIG=%d,\"control:euler_angle_max\",\"0.%d\"\r", seq++, PITCH_ROLL_RATE);
+        case 8: // Set pitch, roll rate
+            if (setting_indoor == 1)
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:euler_angle_max\",\"0.%d\"\r", seq++, IN_PITCH_ROLL_RATE);
+            }
+            else
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:euler_angle_max\",\"0.%d\"\r", seq++, OUT_PITCH_ROLL_RATE);
+            }
             break;
             
-        case 8: // Set max altitude
-            sprintf(data, "AT*CONFIG=%d,\"control:altitude_max\",\"%d\"\r", seq++, ALTITUDE_MAX);
+        case 9: // Set max altitude
+            if (setting_indoor == 1)
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:altitude_max\",\"%d\"\r", seq++, IN_ALTITUDE_MAX);
+            }
+            else
+            {
+                sprintf(data, "AT*CONFIG=%d,\"control:altitude_max\",\"%d\"\r", seq++, OUT_ALTITUDE_MAX);
+            }            
             break;
 
             
-        case 9: // Drone is ready , play LEDs
-            sprintf(data, "AT*LED=%d,2,1073741824,5\r", seq++);
+        case 10: // Drone is ready , play LEDs
+            sprintf(data, "AT*LED=%d,2,1073741824,6\r", seq++);
             break;
 
             
-        case 10: // Set drone ready for flying
+        case 11: // Set drone ready for flying
             init_drone = 0;
             drone_status = ARDStatusGrounded;
             break;

@@ -1,6 +1,6 @@
 /*
  *  user_config.h
- *  Ardu.Drone RC V0.2.1
+ *  Ardu.Drone RC V0.2.2
  *
  *  Created by nosaari on 16.02.11.
  *  (Based on RC Ar.Drone V2.1 by Mheeli at rcgroups.com)
@@ -22,6 +22,12 @@
 #define LEDPIN          13          // The PIN to control the LED, 13 is the default 
                                     // onboard LED of the Arduino Pro Mini
                                     
+#define PAIR_MAC        "00:25:00:3d:18:84"
+                                    // Enter a MAC address the drone should get paired
+                                    // with. This could e.g. be the one from your computer
+                                    // so you still have access to the drone to 
+                                    // configure it. If you just want to block access
+                                    // simply enter a random MAC.
 
 
 /**
@@ -29,21 +35,35 @@
  *
  *  Flight parameter and drone settings
  */
-#define YAW_RATE        4           // YAW rate. Range 0-6 whole number no decimal,
+
+// Configuration for OUTDOOR setting
+#define OUT_YAW_RATE        4       // YAW rate. Range 0-6 whole number no decimal,
                                     // default 5
-#define THROTTLE_RATE   1500        // Throttle rate. Range 0-20000, whole number,
+#define OUT_THROTTLE_RATE   1500    // Throttle rate. Range 0-20000, whole number,
                                     // no decimal
-#define PITCH_ROLL_RATE 1           // Pitch-roll rate. Range 0-5, whole number
+#define OUT_PITCH_ROLL_RATE 3       // Pitch-roll rate. Range 0-5, whole number
                                     // no decimal ie 0,1,2,3,4 or 5 only
 
-#define ALTITUDE_MAX    10000       // Maximum drone altitude in millimeters. 
+#define OUT_ALTITUDE_MAX    10000   // Maximum drone altitude in millimeters. 
                                     // Give an integer value between 500 and 5000
                                     // to prevent the drone from flying above this 
                                     // limit, or set it to 10000 to let the drone 
                                     // fly as high as desired
 
-#define FLY_OUTDOOR     "FALSE"     // Out door or indoor. "FALSE" = indoor, "TRUE" = outdoor
-                                    // Simultaneously sets hull on or off to the same value!
+// Configuration for INDOOR setting
+#define IN_YAW_RATE        4        // YAW rate. Range 0-6 whole number no decimal,
+                                    // default 5
+#define IN_THROTTLE_RATE   1500     // Throttle rate. Range 0-20000, whole number,
+                                    // no decimal
+#define IN_PITCH_ROLL_RATE 2        // Pitch-roll rate. Range 0-5, whole number
+                                    // no decimal ie 0,1,2,3,4 or 5 only
+
+#define IN_ALTITUDE_MAX    4000     // Maximum drone altitude in millimeters. 
+                                    // Give an integer value between 500 and 5000
+                                    // to prevent the drone from flying above this 
+                                    // limit, or set it to 10000 to let the drone 
+                                    // fly as high as desired
+
 
 
 /**
