@@ -1,6 +1,6 @@
 /*
  *  ATComSerialProxyServer
- *  v0.2.1
+ *  v0.2.2
  *  ARDroneTools
  *
  *  Created by nosaari on 25.02.11.
@@ -8,18 +8,24 @@
  
  Very basic proxy server that reads any lines in given tty device and sends it
  via UDP to given server.
- Any line that starts with '#' is considered as debug output and will be ignored!
+ Any line thats not starting with 'AT' is considered as debug output and will 
+ be ignored!
  
  # Options:
  
  -v
- [verbose] Enables output of received strings, for performance reasons only use
+ v[erbose] - Enables output of received strings, for performance reasons only use
  while debugging!
  
  -d DEVICE
- [device] Set device to read values from, eg '/dev/ttyPA0'. If none is given
+ d[evice] - Set device to read values from, eg. '/dev/ttyPA0'. If none is given
  the default (hardcoded) device will be used (can be set below, see SETUP!).
  
+ -i IP.ADDRESS
+ i[p] - Sets IP address commands are sent to, eg. '192.168.1.2'. If none is given
+ the default (hardcoded) ip of the drone (192.168.1.1) will be used (can be set 
+ below, see SETUP!).
+
  
  Based on server code from
  http://www.gamedev.net/topic/310343-udp-client-server-echo-example/
@@ -71,6 +77,7 @@ int main(int argc, char* argv[])
     
     char message[MAX_MESSAGE_LENGTH];
     char* serialDevice      = NULL;
+    char* remoteIpAddress   = NULL;
     FILE* inputFile;
 
     struct sockaddr_in remoteAddress;
@@ -78,18 +85,21 @@ int main(int argc, char* argv[])
     // Read arguments
     opterr = 0;
     int opt;
-    while ((opt = getopt(argc, argv, "d:v")) != -1)
+    while ((opt = getopt(argc, argv, "i:d:v")) != -1)
     {
         switch (opt)
         {
             case 'v':
                 verbose = 1;
                 break;
+            case 'i':
+                remoteIpAddress = optarg;
+                break;
             case 'd':
                 serialDevice = optarg;
                 break;
             case '?':
-                if (optopt == 'd')
+                if ((optopt == 'i') || (optopt == 'd'))
                     fprintf(stderr, "%s > ERROR: Option -%c requires an argument.\n", argv[0], optopt);
                 else if (isprint(optopt))
                     fprintf(stderr, "%s > ERROR: Unknown option `-%c'.\n", argv[0], optopt);
@@ -105,6 +115,12 @@ int main(int argc, char* argv[])
     if (serialDevice == NULL)
     {
         serialDevice = DEFAULT_SERIAL_DEVICE;
+    }
+    
+    // Use default ip address if no ip was given
+    if (remoteIpAddress == NULL)
+    {
+        remoteIpAddress = REMOTE_SERVER_ADDRESS;
     }
     
     // Create socket with UDP setting (SOCK_DGRAM)
@@ -128,7 +144,7 @@ int main(int argc, char* argv[])
     // Initialise remote server address
     memset(&remoteAddress, 0, sizeof(struct sockaddr_in));
     remoteAddress.sin_family = AF_INET;
-    remoteAddress.sin_addr.s_addr = inet_addr(REMOTE_SERVER_ADDRESS);
+    remoteAddress.sin_addr.s_addr = inet_addr(remoteIpAddress);
     remoteAddress.sin_port = htons(REMOTE_SERVER_PORT);
     addressLength = sizeof(remoteAddress);
     
@@ -160,13 +176,9 @@ int main(int argc, char* argv[])
             printf("%s > %s!\n", argv[0], message);
         }
         
-        // CONVENTION: Don't send messages that begin with '#'!
-        // No AT command and probably debug output from Arduino!
-        if (message[0] == '#')
-        {
-            continue;
-        }
-        else
+        // CONVENTION: Only send messages that begin with the chars 'AT'!
+        // Every AT command must begin with these, everything else is ignored!
+        if (message[0] == 'A' && message[1] == 'T')
         {
             // Add line feed to the end
             strncat(message, "\r", 2);
