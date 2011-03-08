@@ -188,37 +188,23 @@ void setup()
 #endif
 
 #ifdef DEBUG_LED
-        // Blink led >short_short_pause< as long as we are not ready
-        digitalWrite(LEDPIN, HIGH);
-        delay(20);
-        digitalWrite(LEDPIN, LOW);
-        delay(40);
-        digitalWrite(LEDPIN, HIGH);
-        delay(20);
-        digitalWrite(LEDPIN, LOW);
-        delay(40);
-        
-        // Additional blink code depending on in-/outdoor setting
+        // Blink slow to tell we have indoor setting active
         if (setting_indoor == 1)
         {
             // One >looong< for indoor
             digitalWrite(LEDPIN, HIGH);
-            delay(200);
+            delay(600);
             digitalWrite(LEDPIN, LOW);
         }
         else
         {
-            // Two >medium_pause_medium< for outdoor
+            // Blink fast to signalize outdoor setting
             digitalWrite(LEDPIN, HIGH);
-            delay(60);
-            digitalWrite(LEDPIN, LOW);
-            delay(80);
-            digitalWrite(LEDPIN, HIGH);
-            delay(60);
+            delay(140);
             digitalWrite(LEDPIN, LOW);
         }
 #endif
-        delay(400);
+        delay(100);
     }
     
     // Steps for each channel
