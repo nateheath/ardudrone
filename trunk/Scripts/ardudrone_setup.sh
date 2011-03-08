@@ -29,4 +29,4 @@ echo Setting correct baud rate of 115200 for /dev/ttyUSB0
 stty -F /dev/ttyUSB0 115200
 
 echo Launching AT Command Proxy server
-/data/video/ardudrone/atcomproxy_arm &
+/data/video/ardudrone/atcomproxy_arm -i 127.0.0.1 &
