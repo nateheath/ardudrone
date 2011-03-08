@@ -22,7 +22,12 @@
 #define LEDPIN          13          // The PIN to control the LED, 13 is the default 
                                     // onboard LED of the Arduino Pro Mini
                                     
-#define PAIR_MAC        "00:25:00:3d:18:84"
+                                    
+                                    
+                                    // TODO: Fix /bin/wifi_setup.sh so local connection
+                                    // from atcomproxy are always accepted even when paired!
+                                    
+#define PAIR_MAC        "00:00:00:00:00:00"
                                     // Enter a MAC address the drone should get paired
                                     // with. This could e.g. be the one from your computer
                                     // so you still have access to the drone to 
