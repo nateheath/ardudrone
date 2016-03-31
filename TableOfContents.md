@@ -1,0 +1,6 @@
+  * [How To](HowTo.md)
+    1. [Required Hardware](RequiredHardware.md)
+    1. [Hardware modifications](HardwareModifications.md)
+    1. [Software modifications](SoftwareModifications.md)
+    1. [Setup](Setup.md)
+    1. [Fly :)](FinalWords.md)
